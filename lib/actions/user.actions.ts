@@ -3,7 +3,7 @@
 
 import { isRedirectError } from 'next/dist/client/components/redirect';
 import { signIn, signOut } from '@/auth';
-import { signInFormSchema } from '../validator';
+import { signInFormSchema } from '../validators';
 
 
 // Sign in the user with credentials
