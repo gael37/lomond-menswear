@@ -4,32 +4,33 @@ import "../assets/styles/globals.css";
 import { APP_NAME, SERVER_URL } from "@/lib/constants";
 import { APP_DESCRIPTION } from "@/lib/constants";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/toaster";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: APP_NAME,
   description: APP_DESCRIPTION,
-  metadataBase: new URL(SERVER_URL)
+  metadataBase: new URL(SERVER_URL),
 };
 
 export default function RootLayout({
-  children, 
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.className} antialiased`}
-      >
+      <body className={`${inter.className} antialiased`}>
         <ThemeProvider
-        attribute='class'
-        defaultTheme='light'
-        enableSystem
-        disableTransitionOnChange>
-        {children}
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );
