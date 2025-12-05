@@ -15,6 +15,8 @@ const AddToCart = ({ item }: { item: CartItem }) => {
     // Execute the addItemToCart action
     const res = await addItemToCart(item);
 
+    console.log("res", res);
+
     // Display appropriate toast message based on the result
     if (!res.success) {
       toast({
@@ -25,7 +27,7 @@ const AddToCart = ({ item }: { item: CartItem }) => {
     }
 
     toast({
-      description: `${item.name} added to the cart`,
+      description: res.message,
       action: (
         <ToastAction
           className="bg-primary text-white hover:bg-gray-800"
