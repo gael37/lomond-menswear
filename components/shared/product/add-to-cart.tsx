@@ -48,8 +48,6 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
       variant: res.success ? "default" : "destructive",
       description: res.message,
     });
-
-    return;
   };
 
   const existItem =
