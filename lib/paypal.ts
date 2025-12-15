@@ -56,9 +56,13 @@ export async function generateAccessToken() {
     },
   });
 
+  const jsonData = await handleResponse(response);
+  return jsonData.access_token;
+}
+
+async function handleResponse(response: Response) {
   if (response.ok) {
-    const jsonData = await response.json();
-    return jsonData.access_token;
+    return response.json();
   } else {
     const errorMessage = await response.text();
     throw new Error(errorMessage);
