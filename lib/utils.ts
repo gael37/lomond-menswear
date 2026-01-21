@@ -26,7 +26,7 @@ export function formatError(error: any): string {
     const fieldErrors = error.issues.map((issue: any) =>
       typeof issue.message === "string"
         ? issue.message
-        : JSON.stringify(issue.message)
+        : JSON.stringify(issue.message),
     );
 
     return fieldErrors.join(". ");
@@ -100,15 +100,15 @@ export const formatDateTime = (dateString: Date) => {
   };
   const formattedDateTime: string = new Date(dateString).toLocaleString(
     "en-US",
-    dateTimeOptions
+    dateTimeOptions,
   );
   const formattedDate: string = new Date(dateString).toLocaleString(
     "en-US",
-    dateOptions
+    dateOptions,
   );
   const formattedTime: string = new Date(dateString).toLocaleString(
     "en-US",
-    timeOptions
+    timeOptions,
   );
   return {
     dateTime: formattedDateTime,
@@ -136,6 +136,12 @@ export function formUrlQuery({
       url: window.location.pathname,
       query,
     },
-    { skipNull: true }
+    { skipNull: true },
   );
+}
+
+//  Format Numbers
+const NUMBER_FORMATTER = new Intl.NumberFormat("en-US");
+export function formatNumber(number: number) {
+  return NUMBER_FORMATTER.format(number);
 }
