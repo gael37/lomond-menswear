@@ -13,6 +13,11 @@ export const signInDefaultValues = {
   password: "123456",
 };
 
+// export const signInDefaultValues = {
+//   email: "steve@example.com",
+//   password: "123456",
+// };
+
 export const signUpDefaultValues = {
   name: "Steve Smith",
   email: "steve@example.com",
@@ -34,4 +39,4 @@ export const PAYMENT_METHODS = process.env.PAYMENT_METHODS
 export const DEFAULT_PAYMENT_METHOD =
   process.env.DEFAULT_PAYMENT_METHOD || "PayPal";
 
-export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 2;
+export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 4;

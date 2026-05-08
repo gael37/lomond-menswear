@@ -3,12 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import Menu from "@/components/shared/header/menu";
 import MainNav from "./main-nav";
+import { Input } from "@/components/ui/input";
+import { requireAdmin } from "@/lib/auth-guard";
 
-export default function UserLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  await requireAdmin();
+
   return (
     <>
       <div className="flex flex-col">
@@ -24,6 +28,13 @@ export default function UserLayout({
             </Link>
             <MainNav className="mx-6" />
             <div className="ml-auto flex items-center space-x-4">
+              <div>
+                <Input
+                  type="search"
+                  placeholder="Search..."
+                  className="md:w-[100px] lg:w-[300px]"
+                />
+              </div>
               <Menu />
             </div>
           </div>

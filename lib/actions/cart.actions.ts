@@ -11,7 +11,7 @@ import { revalidatePath } from "next/cache";
 
 const calcPrice = (items: CartItem[]) => {
   const itemsPrice = round2(
-      items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0)
+      items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0),
     ),
     shippingPrice = round2(itemsPrice > 100 ? 0 : 10),
     taxPrice = round2(0.15 * itemsPrice),
@@ -24,7 +24,7 @@ const calcPrice = (items: CartItem[]) => {
   };
 };
 
-export async function addItemToCart(data: CartItem) {
+export async function addItemToCart2(data: CartItem) {
   try {
     // 1️⃣ Get session info
     const cookieStore = await cookies();
@@ -90,7 +90,7 @@ export async function addItemToCart(data: CartItem) {
 
     // 4️⃣ Add or update item in cart
     const existItem = (cartToUse.items as CartItem[]).find(
-      (x) => x.productId === item.productId
+      (x) => x.productId === item.productId,
     );
     if (existItem) {
       if (product.stock < existItem.qty + 1)
@@ -121,7 +121,7 @@ export async function addItemToCart(data: CartItem) {
   }
 }
 
-export async function addItemToCartOriginal(data: CartItem) {
+export async function addItemToCart(data: CartItem) {
   try {
     // Check for session cart cookie
     const sessionCartId = (await cookies()).get("sessionCartId")?.value;
@@ -165,7 +165,7 @@ export async function addItemToCartOriginal(data: CartItem) {
     } else {
       // Check for existing item in cart
       const existItem = (cart.items as CartItem[]).find(
-        (x) => x.productId === item.productId
+        (x) => x.productId === item.productId,
       );
       // If not enough stock, throw error
       if (existItem) {
@@ -175,7 +175,7 @@ export async function addItemToCartOriginal(data: CartItem) {
 
         // Increase quantity of existing item
         (cart.items as CartItem[]).find(
-          (x) => x.productId === item.productId
+          (x) => x.productId === item.productId,
         )!.qty = existItem.qty + 1;
       } else {
         // If stock, add item to cart
@@ -309,7 +309,7 @@ export async function removeItemFromCart(productId: string) {
 
     // Check if cart has item
     const exist = (cart.items as CartItem[]).find(
-      (x) => x.productId === productId
+      (x) => x.productId === productId,
     );
     if (!exist) throw new Error("Item not found");
 
@@ -317,7 +317,7 @@ export async function removeItemFromCart(productId: string) {
     if (exist.qty === 1) {
       // Remove item from cart
       cart.items = (cart.items as CartItem[]).filter(
-        (x) => x.productId !== exist.productId
+        (x) => x.productId !== exist.productId,
       );
     } else {
       // Decrease quantity of existing item

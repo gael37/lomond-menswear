@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { auth } from "@/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getOrderSummary } from "@/lib/actions/order.actions";
 import { formatCurrency, formatDateTime, formatNumber } from "@/lib/utils";
@@ -13,17 +12,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import Charts from "./charts";
+// import { requireAdmin } from "@/lib/auth-guard";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
 };
 
 const AdminOverviewPage = async () => {
-  const session = await auth();
-
-  // Make sure the user is an admin
-  if (session?.user.role !== "admin")
-    throw new Error("admin permission required");
+  // await requireAdmin();
 
   // Get order summary
   const summary = await getOrderSummary();
@@ -39,7 +36,9 @@ const AdminOverviewPage = async () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {formatCurrency(summary.totalSales._sum.totalPrice!.toString())}
+              {formatCurrency(
+                summary.totalSales._sum.totalPrice?.toString() || 0,
+              )}
             </div>
           </CardContent>
         </Card>
@@ -78,7 +77,24 @@ const AdminOverviewPage = async () => {
           <CardHeader>
             <CardTitle>Overview</CardTitle>
           </CardHeader>
-          <CardContent className="pl-2">{/* CHART */}</CardContent>
+          <CardContent className="pl-2">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+              <div className="col-span-7 md:col-span-2 lg:col-span-7 min-w-0">
+                <Card className="col-span-4">
+                  <CardHeader>
+                    <CardTitle>Overview</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pl-2">
+                    <Charts
+                      data={{
+                        salesData: summary.salesData,
+                      }}
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </CardContent>
         </Card>
         <Card className="col-span-3">
           <CardHeader>
